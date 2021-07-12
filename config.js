@@ -9,7 +9,8 @@ const prod = {
     db: {
         host: process.env.PROD_DB_HOST || 'localhost',
         port: parseInt(process.env.PROD_DB_PORT) || 27017,
-        name: process.env.PROD_DB_NAME || 'portfolio_data'
+        name: process.env.PROD_DB_NAME || 'portfolio',
+        user: process.env.PROD_DB_USER || 'portfolioapp'
     }
 };
 
@@ -20,7 +21,9 @@ const dev = {
     db: {
         host: process.env.DEV_DB_HOST || 'localhost',
         port: parseInt(process.env.DEV_DB_PORT) || 27017,
-        name: process.env.DEV_DB_NAME || 'portfolio_data'
+        name: process.env.DEV_DB_NAME || 'portfolio'
+        user: process.env.DEV_DB_USER || 'portfolioapp'
+    }
     }
 };
 
