@@ -15,5 +15,16 @@
   "bugs": {
     "url": "https://github.com/CurtiePi/portfolio/issues"
   },
-  "homepage": "https://github.com/CurtiePi/portfolio#readme"
+  "homepage": "https://github.com/CurtiePi/portfolio#readme",
+  "dependencies": {
+    "apollo-server-express": "^3.0.0",
+    "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.1",
+    "jsonwebtoken": "^8.5.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.6.5"
+  }
 }
