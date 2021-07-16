@@ -8,7 +8,8 @@ const Date = new GraphQLScalarType({
       return new Date(value); // value from the client
     },
     serialize(value) {
-      return value.getTime(); // value sent to the client
+     var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', timeZone: 'UTC', timeZoneName: 'short', hour12: false };
+     return new Intl.DateTimeFormat('en-US', { dateStyle: 'full', timeStyle: 'short' }).format(value);
     },
     parseLiteral(ast) {
       if (ast.kind === Kind.INT) {
@@ -64,6 +65,12 @@ const User = new GraphQLObjectType({
                 resolve(user) {
                     return user.updatedAt;
                 }
+            },
+            posts: {
+                type: new GraphQLList(Post),
+                resolve(user) {
+                    return user.getPosts();
+                }
             }
         }
     }
@@ -92,16 +99,22 @@ const Post = new GraphQLObjectType({
                     return post.content;
                 }
             },
-            email: {
-                type: GraphQLString,
-                resolver(user) {
-                    return user.email;
+            createdAt: {
+                type: Date,
+                resolve(post) {
+                    return post.createdAt;
                 }
             },
-            password: {
-                type: GraphQLString,
-                resolve(user) {
-                    return user.password;
+            updatedAt: {
+                type: Date,
+                resolve(post) {
+                    return post.updatedAt;
+                }
+            },
+            user: {
+                type: User,
+                resolve(post) {
+                    return post.getUser();
                 }
             }
         }
@@ -125,7 +138,13 @@ const Query = new GraphQLObjectType({
                     }
                 },
                 resolve(users, args) {
-                    return Db.models.user.findAll({ where: args});
+                    return Db.models.user.findAll({ where: args });
+                }
+            },
+            posts: {
+                type: new GraphQLList(Post),
+                resolve(posts, args) {
+                    return Db.models.post.findAll({ where: args });
                 }
             }
         }
