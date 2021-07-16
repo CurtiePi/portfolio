@@ -1,6 +1,8 @@
-require('dotenv').config();
+require('dotenv').config({ papth: require('find-config')('.env') });
 
-const env = process.env.NODE_ENV; // 'dev' or 'test'
+const env = process.env.NODE_ENV; // 'dev' or 'prod'
+
+console.log(`Environment: ${env}`);
 
 const prod = {
     app: {
@@ -10,7 +12,8 @@ const prod = {
         host: process.env.PROD_DB_HOST || 'localhost',
         port: parseInt(process.env.PROD_DB_PORT) || 27017,
         name: process.env.PROD_DB_NAME || 'portfolio',
-        user: process.env.PROD_DB_USER || 'portfolioapp'
+        user: process.env.PROD_DB_USER || 'portfolioapp',
+        pw: process.env.PROD_DB_USER_PW
     }
 };
 
@@ -21,9 +24,9 @@ const dev = {
     db: {
         host: process.env.DEV_DB_HOST || 'localhost',
         port: parseInt(process.env.DEV_DB_PORT) || 27017,
-        name: process.env.DEV_DB_NAME || 'portfolio'
-        user: process.env.DEV_DB_USER || 'portfolioapp'
-    }
+        name: process.env.DEV_DB_NAME || 'portfolio',
+        user: process.env.DEV_DB_USER || 'portfolioapp',
+        pw: process.env.DEV_DB_USER_PW
     }
 };
 
@@ -32,5 +35,6 @@ const config = {
     prod
 };
 
+console.log(config[env]);
 
 module.exports = config[env];
