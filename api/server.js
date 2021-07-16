@@ -1,5 +1,6 @@
 const express           = require("express");
-const { createServer}   = require('http');
+const { graphqlHTTP }   = require('express-graphql');
+const schema            = require('../schema');
 const cors              = require("cors");
 const app               = express();
 
@@ -10,6 +11,10 @@ app.get("/", (req, res) => {
     res.json({ message: "Welcome to the party Hans."});
 });
 
-const server = createServer(app);
+app.use('/graphql', graphqlHTTP({
+    schema: schema,
+    pretty: true
+}));
 
-module.exports = server;
+
+module.exports = app;
