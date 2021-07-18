@@ -1,5 +1,5 @@
 const Db = require('./models');
-const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLScalarType, GraphQLList,  GraphQLString, GraphQLInt, Kind } = require('graphql');
+const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLScalarType, GraphQLNonNull, GraphQLList,  GraphQLString, GraphQLInt, Kind } = require('graphql');
 
 const Date = new GraphQLScalarType({
     name: 'Date',
@@ -151,9 +151,64 @@ const Query = new GraphQLObjectType({
     }
 });
 
+const Mutation = new GraphQLObjectType({
+    name: 'Mutation',
+    description: 'Function to create stuff',
+    fields: () => {
+        return {
+            addUser: {
+                type: User,
+                args: {
+                    firstName: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    lastName: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    email: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    password: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    }
+                },
+                resolve(_, args) {
+                    return Db.models.user.create({
+                        firstName: args.firstName,
+                        lastName: args.lastName,
+                        email: args.email.toLowerCase(),
+                        password: args.password
+                    });
+                }
+            },
+            addPost: {
+                type: Post,
+                args: {
+                    userId: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    title: {
+                        type: GraphQLNonNull(GraphQLString)
+                    },
+                    content: {
+                        type: GraphQLNonNull(GraphQLString)
+                    }
+                },
+                async resolve (source, args) {
+                    var user = await Db.models.user.findByPk(args.userId);
+                    return user.createPost({
+                        title: args.title,
+                        content: args.content
+                    });
+                }
+            }
+        }
+    }
+});
 
 const Schema = new GraphQLSchema({
-    query: Query
+    query: Query,
+    mutation: Mutation
 });
 
 module.exports = Schema;
