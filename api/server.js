@@ -3,7 +3,7 @@ const { graphqlHTTP }   = require('express-graphql');
 const schema            = require('../graphql/schema');
 const cors              = require("cors");
 const app               = express();
-const isAuth            = require('../middleware/auth_middleware');
+const isAuth            = require('../middleware/auth_check');
 const models            = require('../middleware/inject_models');
 
 app.use(cors({credentials: true, origin: 'http://192.168.1.3:8080'}));
