@@ -4,7 +4,6 @@ const jwt       = require('jsonwebtoken');
 
 const AuthMiddleware = (request, response, next) => {
 
-    console.log('Setting the authentication to false');
     request.isAuth = false;
 
     const authorizationHeader = request.headers.authorization;
@@ -13,7 +12,7 @@ const AuthMiddleware = (request, response, next) => {
         return next();
     }
 
-    const token = authorizationHeader.split(' ')[1];
+    const token = authorizationHeader;
     if (!token || token === '') {
         return next();
     }
@@ -30,8 +29,8 @@ const AuthMiddleware = (request, response, next) => {
         return next();
     }
 
-    req.isAuth = true;
-    req.userId = decodedToken.userId;
+    request.isAuth = true;
+    request.userId = decodedToken.userId;
     next();
 }
 

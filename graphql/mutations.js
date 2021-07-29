@@ -24,7 +24,9 @@ const Mutation = new GraphQLObjectType({
                     }
                 },
                 resolve(_, args, ctx ) {
-                    console.log(`Are we authenticated: ${ctx.isAuth}`);
+                    if (!ctx.isAuth) {
+                        throw new Error('This operation cannot be performed!')
+                    }
                     return ctx.models.user.create({
                         firstName: args.firstName,
                         lastName: args.lastName,
@@ -47,6 +49,9 @@ const Mutation = new GraphQLObjectType({
                     }
                 },
                 async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('This operation cannot be performed!')
+                    }
                     var user = await ctx.models.user.findByPk(args.userId);
                     return user.createPost({
                         title: args.title,
