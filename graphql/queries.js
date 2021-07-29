@@ -1,0 +1,76 @@
+const { GraphQL,
+        GraphQLSchema,
+        GraphQLObjectType,
+        GraphQLNonNull,
+        GraphQLList,
+        GraphQLString,
+        GraphQLInt }    = require('graphql');
+const bcrypt            = require('bcryptjs');
+const config            = require('../config');
+const jwt               = require('jsonwebtoken');
+const Post              = require('./post-schema');
+const User              = require('./user-schema');
+const Auth              = require('./auth-schema');
+
+const Query = new GraphQLObjectType({
+    name: 'Query',
+    description: 'This is a root query',
+    fields: () => {
+        return {
+            users: {
+                type: new GraphQLList(User),
+                args: {
+                    id: {
+                        type: GraphQLInt
+                    },
+                    email: {
+                        type: GraphQLString
+                    }
+                },
+                resolve(users, args, context) {
+                    return context.models.user.findAll({ where: args });
+                }
+            },
+            posts: {
+                type: new GraphQLList(Post),
+                resolve(posts, args) {
+                    return context.models.post.findAll({ where: args });
+                }
+            },
+            login: {
+                type: Auth,
+                args: {
+                    email: {
+                        type: GraphQLString
+                    },
+                    password: {
+                        type: GraphQLString
+                    }
+                },
+                async resolve(_, args, ctx) {
+                    const user = await ctx.models.user.findOne({ where: { email: args.email } });
+                    if (!user) {
+                        throw new Error('User does not exist!');
+                    }
+                    const isEqual = await bcrypt.compare(args.password, user.password);
+                    if (!isEqual) {
+                        throw new Error('Password is incorrect for this user!');
+                    }
+
+                    const token = jwt.sign(
+                        {userId: user.id, email: user.email},
+                        config.salt,
+                        { 
+                            expiresIn: '1h'
+                        }
+                    );
+
+                    return { userId: user.id, token: token, tokenExpiry: 1 }; 
+
+                }
+            }
+        }
+    }
+});
+
+module.exports = Query;
