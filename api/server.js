@@ -1,8 +1,10 @@
 const express           = require("express");
 const { graphqlHTTP }   = require('express-graphql');
-const schema            = require('../schema');
+const schema            = require('../graphql/schema');
 const cors              = require("cors");
 const app               = express();
+const isAuth            = require('../middleware/auth_middleware');
+const models            = require('../middleware/inject_models');
 
 app.use(cors({credentials: true, origin: 'http://192.168.1.3:8080'}));
 
@@ -10,6 +12,9 @@ app.use(cors({credentials: true, origin: 'http://192.168.1.3:8080'}));
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to the party Hans."});
 });
+
+app.use(isAuth);
+app.use(models);
 
 app.use('/graphql', graphqlHTTP({
     schema: schema,
