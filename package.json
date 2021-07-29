@@ -28,6 +28,7 @@
     "faker": "^5.5.3",
     "find-config": "^1.0.0",
     "graphql": "^15.5.1",
+    "graphql-modules": "^1.4.4",
     "graphql-tools": "^7.0.5",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.21",
