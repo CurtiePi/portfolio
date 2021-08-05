@@ -27,14 +27,14 @@ const Query = new GraphQLObjectType({
                         type: GraphQLString
                     }
                 },
-                resolve(users, args, context) {
-                    return context.models.user.findAll({ where: args });
+                resolve(users, args, ctx) {
+                    return ctx.models.user.findAll({ where: args });
                 }
             },
             posts: {
                 type: new GraphQLList(Post),
-                resolve(posts, args) {
-                    return context.models.post.findAll({ where: args });
+                resolve(posts, args, ctx) {
+                    return ctx.models.post.findAll({ where: args });
                 }
             },
             login: {
