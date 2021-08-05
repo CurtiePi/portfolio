@@ -1,4 +1,4 @@
-import { Api, setAuthorization } from '@/services/Api'
+import Api from '@/services/Api'
 
 export default {
   queryInfo (payload) {
@@ -6,9 +6,5 @@ export default {
   },
   mutateInfo (payload) {
     return Api().post('/graphql', payload)
-  },
-  setAuthorization (payload) {
-    setAuthorization(payload)
-    return payload
   }
 }

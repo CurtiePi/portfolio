@@ -43,7 +43,6 @@ export default {
         let result = await InformationService.queryInfo(payload)
         let token = result.data.data.login.token
         console.log(token)
-        InformationService.setAuthorization(token)
         this.$router.replace({ name: 'Home' })
       } catch (err) {
         console.log(err)

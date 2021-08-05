@@ -1,13 +1,7 @@
 import axios from 'axios'
-import { options, updateOptions } from './config'
 
-const Api = () => {
-  return axios.create(options)
+export default  () => {
+  return axios.create({
+      baseURL: 'http://192.168.1.3:3020'
+  })
 }
-
-function setAuthorization (token) {
-    updateOptions('Authorization', token)
-}
-
-export { Api, setAuthorization }
-
