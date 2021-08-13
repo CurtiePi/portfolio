@@ -1,13 +1,20 @@
+Vue.config.ignoredElements = [/^ion-/]
+
 <template>
   <div id="app">
+    <HeaderNav />
     <router-view></router-view>
   </div>
 </template>
 
 <script>
+import HeaderNav from '@/components/Navigation'
 
 export default {
   name: 'App',
+  components: {
+    HeaderNav
+  }
 }
 </script>
 
