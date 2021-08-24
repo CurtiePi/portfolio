@@ -1,12 +1,6 @@
 <template>
   <div>
-    <h1>Current Posts</h1>
-    <p v-for="post in posts"
-       :key="post.id">
-       Title: {{ post.title }}
-       <br>
-       Content: {{ post.content }}
-    </p>    
+    <img src="/images/skyline.jpg" />
   </div>
 </template>
 <script>
@@ -44,6 +38,39 @@ export default {
   }
 }
 </script>
-<style>
+<style scoped>
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 320px) {
+  div { 
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (min-width: 560px) {
+  div { 
+    margin: 0;
+    padding: 0;
+  }
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+}
 </style>
 
