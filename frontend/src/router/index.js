@@ -10,7 +10,22 @@ const routes = [
       path: '/login',
       name: 'Login',
       component: () => import('../components/Login.vue')
-    }
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: () => import('../components/About.vue')
+    },
+    {
+      path: '/contact',
+      name: 'Contact',
+      component: () => import('../components/Contact.vue')
+    },
+    {
+      path: '/admin/post',
+      name: 'AdminPosts',
+      component: () => import('../components/Posts.vue')
+    },
   ]
 
 const router = createRouter({
