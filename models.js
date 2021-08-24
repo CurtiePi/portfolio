@@ -96,4 +96,16 @@ conn.sync({ force: true }).then( () => {
     });
 });
 
+conn.sync({ force: true }).then( () => {
+    _.times(10, () =>  {
+        return Contact.create({
+            name: `${Faker.name.firstName()} ${Faker.name.lastName()}` ,
+            email: Faker.internet.email(),
+            cover: Faker.lorem.sentences(),
+            hasMessaged: Math.floor(Math.random() * 1)
+        }).then((contact) => {
+            console.log(`Loaded contact ${contact.name}`);
+        });
+    });
+});
 module.exports = conn;
