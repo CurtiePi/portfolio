@@ -27,6 +27,11 @@ const routes = [
       component: () => import('../components/ContactList.vue')
     },
     {
+      path: '/admin/createmail',
+      name: 'CreateMessage',
+      component: () => import('../components/CreateMessage.vue')
+    },
+    {
       path: '/admin/post',
       name: 'AdminPosts',
       component: () => import('../components/Posts.vue')
