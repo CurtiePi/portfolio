@@ -11,6 +11,7 @@ const jwt               = require('jsonwebtoken');
 const Post              = require('./post-schema');
 const User              = require('./user-schema');
 const Auth              = require('./auth-schema');
+const Contact           = require('./contact-schema');
 
 const Query = new GraphQLObjectType({
     name: 'Query',
@@ -33,8 +34,22 @@ const Query = new GraphQLObjectType({
             },
             posts: {
                 type: new GraphQLList(Post),
+                args: {
+                    userId: {
+                        type: GraphQLInt
+                    },
+                    userId: {
+                        type: new GraphQLList(GraphQLInt)
+                   }
+                },
                 resolve(posts, args, ctx) {
                     return ctx.models.post.findAll({ where: args });
+                }
+            },
+            contacts: {
+                type: new GraphQLList(Contact),
+                resolve(contacts, args, ctx) {
+                    return ctx.models.contact.findAll({ where: args });
                 }
             },
             login: {

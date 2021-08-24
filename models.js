@@ -57,6 +57,19 @@ const Post = conn.define('post', {
     }
 });
 
+const Contact = conn.define('contact', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    email: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    cover: {
+        type: DataTypes.STRING
+    }
+});
 
 User.hasMany(Post);
 Post.belongsTo(User);

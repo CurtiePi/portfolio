@@ -1,6 +1,8 @@
 const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLList,  GraphQLString, GraphQLInt } = require('graphql');
+const HTML = require('./html-schema');
 const Post = require('./post-schema');
 const User = require('./user-schema');
+const Contact = require('./contact-schema');
 
 const Mutation = new GraphQLObjectType({
     name: 'Mutation',
@@ -45,7 +47,7 @@ const Mutation = new GraphQLObjectType({
                         type: GraphQLNonNull(GraphQLString)
                     },
                     content: {
-                        type: GraphQLNonNull(GraphQLString)
+                        type: GraphQLNonNull(HTML)
                     }
                 },
                 async resolve (source, args, ctx) {
@@ -56,6 +58,27 @@ const Mutation = new GraphQLObjectType({
                     return user.createPost({
                         title: args.title,
                         content: args.content
+                    });
+                }
+            },
+            addContact: {
+                type: Contact,
+                args: {
+                    name: {
+                        type: GraphQLNonNull(GraphQLString)
+                    },
+                    email: {
+                        type: GraphQLNonNull(GraphQLString)
+                    },
+                    cover: {
+                        type: GraphQLNonNull(GraphQLString)
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    return ctx.models.contact.create({
+                        name: args.name,
+                        email: args.email,
+                        cover: args.cover
                     });
                 }
             }

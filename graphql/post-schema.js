@@ -1,4 +1,5 @@
 const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLList,  GraphQLString, GraphQLInt } = require('graphql');
+const HTML = require('./html-schema');
 const User = require('./user-schema');
 const Date = require('./date-schema');
 
@@ -20,7 +21,7 @@ const Post = new GraphQLObjectType({
                 }
             },
             content: {
-                type: GraphQLString,
+                type: HTML,
                 resolve(post) {
                     return post.content;
                 }
