@@ -49,6 +49,9 @@ const Query = new GraphQLObjectType({
             contacts: {
                 type: new GraphQLList(Contact),
                 resolve(contacts, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('You must be logged in to perform this operation!')
+                    }
                     return ctx.models.contact.findAll({ where: args });
                 }
             },
