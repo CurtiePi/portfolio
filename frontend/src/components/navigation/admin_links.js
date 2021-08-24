@@ -10,9 +10,9 @@ const adminNavLinks = [
     name: 'Home'
   },
   {
-    text: 'Admin Task 3',
+    text: 'Contacts',
     icon: 'home',
-    name: 'Home'
+    name: 'ContactList'
   }
 ]
 
