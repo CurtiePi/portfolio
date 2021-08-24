@@ -33,7 +33,11 @@
       <tr v-for="contact in contacts_display"
           :key="contact.id">
         <td width="10%">{{ contact.name }}</td>
-        <td width="20%">{{ contact.email }}</td>
+        <td width="20%">
+          <router-link :to="{ name: 'CreateMessage', params: { 'payload': contact, 'caller': 'ContactList' } }">
+            {{ contact.email }}
+          </router-link>
+        </td>
         <td width="65%">{{ contact.cover }}</td>
       </tr>
     </div>
