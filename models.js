@@ -72,7 +72,7 @@ const Contact = conn.define('contact', {
     hasMessaged: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
-        default: 0
+        defaultValue: 0
     }
 });
 

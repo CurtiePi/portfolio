@@ -31,7 +31,7 @@ const Contact = new GraphQLObjectType({
                 }
             },
             hasMessaged: {
-                type: GraphQLBoolean,
+                type: GraphQLInt,
                 resolve(contact) {
                     return contact.hasMessaged;
                 }
