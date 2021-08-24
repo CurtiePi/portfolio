@@ -1,18 +1,18 @@
 const navLinks = [
   {
-    text: 'Link Number 1',
+    text: 'Articles',
     icon: 'person',
     name: 'Home'
   },
   {
-    text: 'Link Number 2',
+    text: 'About Me',
     icon: 'people',
-    name: 'Home'
+    name: 'About'
   },
   {
-    text: 'Link Number 3',
+    text: 'Contact Me',
     icon: 'home',
-    name: 'Home'
+    name: 'Contact'
   }
 ]
 

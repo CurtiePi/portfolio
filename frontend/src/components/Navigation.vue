@@ -141,7 +141,7 @@ export default {
     padding: 0 1rem;
     display: flex;
     align-items: center;
-    margin-left: 0;
+    margin: 0;
   }
 
   .main-nav-toggle {
@@ -157,7 +157,7 @@ export default {
     flex-direction: row;
     gap: 2rem;
     align-items: center;
-    margin: 1rem;
+    margin: 0;
   }
 
   .main-nav-menu li {
