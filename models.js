@@ -68,6 +68,11 @@ const Contact = conn.define('contact', {
     },
     cover: {
         type: DataTypes.STRING
+    },
+    hasMessaged: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        default: 0
     }
 });
 

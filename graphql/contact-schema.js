@@ -1,4 +1,4 @@
-const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLList,  GraphQLString, GraphQLInt } = require('graphql');
+const { GraphQL, GraphQLBoolean, GraphQLSchema, GraphQLObjectType, GraphQLList,  GraphQLString, GraphQLInt } = require('graphql');
 const Date = require('./date-schema');
 
 const Contact = new GraphQLObjectType({
@@ -28,6 +28,12 @@ const Contact = new GraphQLObjectType({
                 type: GraphQLString,
                 resolve(contact) {
                     return contact.cover;
+                }
+            },
+            hasMessaged: {
+                type: GraphQLBoolean,
+                resolve(contact) {
+                    return contact.hasMessaged;
                 }
             },
             createdAt: {
