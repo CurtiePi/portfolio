@@ -12,12 +12,12 @@
 </template>
 <script>
 import InformationService from '@/services/InformationService'
-import Input from '@/components/Input'
+import InputComponent from '@/components/InputComponent'
 
 export default {
   name: 'Home',
   components: {
-    inputcomponent: Input
+    inputcomponent: InputComponent
   },
   data () {
     return {
