@@ -41,6 +41,7 @@ export default {
 
       try{
         let result = await InformationService.queryInfo(payload)
+        console.log(result)
         let authData = {
           userId: result.data.data.login.userId,
           token: result.data.data.login.token,
@@ -49,9 +50,9 @@ export default {
         console.log(authData)
         this.$store.commit('setAuth', authData)
 
-        this.$router.replace({ name: 'Home' })
+        this.$router.replace({ name: 'AdminPosts' })
       } catch (err) {
-        console.log(err)
+        this.$router.replace({ name: 'Home' })
       }
     }
   }
