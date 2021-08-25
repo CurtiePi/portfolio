@@ -7,17 +7,18 @@
        <br>
        Content: {{ post.content }}
     </p>    
-    <inputcomponent></inputcomponent>
+    <InputComponent v-on:childToParent="captureChildData" />
   </div>
 </template>
 <script>
 import InformationService from '@/services/InformationService'
 import InputComponent from '@/components/InputComponent'
+import sanitizeHtml from 'sanitize-html'
 
 export default {
   name: 'Home',
   components: {
-    inputcomponent: InputComponent
+    InputComponent
   },
   data () {
     return {
@@ -43,6 +44,38 @@ export default {
       } catch (err) {
         console.log(err)
       }
+    },
+    async addPost(titleText, content) {
+      let userId = this.$store.getters.getUserId
+      let payload = {
+        query: `mutation {
+          addPost(userId: ${userId}, title: "${titleText}", content: "${content}") {
+            id
+            title
+            content
+          }
+        }`
+      }
+
+      try{
+        let result = await InformationService.mutateInfo(payload)
+        console.log(result)
+      } catch (err) {
+        console.log(err)
+      }
+    },
+    captureChildData (data) {
+      console.log(data)
+      let titleText = data.title
+      let content = this.sanitize(data.content)
+      this.addPost(titleText, content)
+    },
+    sanitize (htmlString) {
+      const sanitizedString = sanitizeHtml(htmlString, {
+        allowedTags: false,
+        allowedAttributes: false
+      })
+      return sanitizedString.replaceAll('"', "'").replace(/\n/g, "");
     }
   },
   mounted () {

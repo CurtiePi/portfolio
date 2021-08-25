@@ -2,10 +2,15 @@
   <div>
     <form>
       <label htmlFor="title">Title</label>
-      <input typye="text" name="title" id="title" v-model.trim="newPost.title" />
+      <input
+         type="text"
+         name="title"
+         id="title"
+         v-model.trim="newPost.title"
+       />
       <label htmlFor="content">Content</label>
     </form>
-     <editor
+    <editor
        :api-key="mce_key"
        :init="{
          height: 500,
@@ -23,19 +28,18 @@
        id="content"
        v-model="newPost.content"
      />
-      <button type="button" @click="addPost()">Post</button>
+      <button type="button" @click="postToParent()">Post</button>
   </div>
 </template>
 <script>
-import InformationService from '@/services/InformationService'
 import Editor from '@tinymce/tinymce-vue'
-import sanitizeHtml from 'sanitize-html'
 
 export default {
   name: 'Input',
   components: {
     editor: Editor
   },
+  emits: [ 'childToParent' ],
   data () {
     return {
       newPost: {
@@ -47,38 +51,12 @@ export default {
     }
   },
   methods: {
-    async addPost() {
-      let htmlContent = this.sanitize(this.newPost.content)
-      let payload = {
-        query: `mutation {
-          addPost(userId: ${this.userId}, title: "${this.newPost.title}", content: "${htmlContent}") {
-            id
-            title
-            content
-          }
-        }`
-      }
-
-      try{
-        let result = await InformationService.mutateInfo(payload)
-        console.log(result)
-        this.newPost.title = null
-        this.newPost.content = null
-      } catch (err) {
-        console.log(err)
-      }
-    },
-    sanitize (htmlString) {
-      const sanitizedString = sanitizeHtml(htmlString, {
-        allowedTags: false,
-        allowedAttributes: false
-      })
-      return sanitizedString.replaceAll('"', "'").replace(/\n/g, "");
+    postToParent () {
+      this.$emit('childToParent', this.newPost)
     }
-
   },
 }
 </script>
-<style>
+<style scoped>
 </style>
 
