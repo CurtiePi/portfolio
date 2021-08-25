@@ -15,6 +15,10 @@ const prod = {
         user: process.env.PROD_DB_USER || 'portfolioapp',
         pw: process.env.PROD_DB_USER_PW
     },
+    mail: {
+        office: '',
+        access: ''
+    },
     salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
 };
 
@@ -28,6 +32,10 @@ const dev = {
         name: process.env.DEV_DB_NAME || 'portfolio',
         user: process.env.DEV_DB_USER || 'portfolioapp',
         pw: process.env.DEV_DB_USER_PW
+    },
+    mail: {
+        office: '',
+        access: ''
     },
     salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
 };
