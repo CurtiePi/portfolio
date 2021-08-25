@@ -17,37 +17,6 @@ const transporter = nodemail.createTransport(smtpTransport({
     }
 }));
 
-const deliverQuoteEmail = (req, res, next) => {
-    var data = req.body
-    var filepath = './public/files/pdf/';
-    var file_attachment = data.attachment;
-
-    var recipients = data.recipients.join(', ');
-    var messageBody = `<p>Please find attached a new cutomer request</p><p>${signature}</p>`;
-    var mailOptions = {
-        from: 'dave@uksailmakers-ne.com;',
-        to: recipients,
-        subject: 'Customer Request',
-        html: 'Please find attached a new customer request</p>',
-        attachments: [{
-            filename: 'sailmakers_logo.png',
-            path: './public/images/sailmakers_logo.jpg',
-            cid: 'dave@uk-sailmakers-ne.com'
-        }, {path: file_attachment}]
-    };
-
-    transporter.sendMail(mailOptions, function (error, info) {
-           if (error){
-               console.log('Error: ' + error);
-               next(error);
-           }
-
-           console.log(`Message ${info.messageId} sent: ${info.response}`);
-           req.infoMessage = info.messageId
-           next();
-    })
-}
-
 const deliverEmail = (req, res, next) => {
     var data = req.body
 
@@ -55,14 +24,9 @@ const deliverEmail = (req, res, next) => {
     var recipients = data.recipients.join(', ');
 
     var mailOptions = {
-        from: 'dave@uksailmakers-ne.com;',
+        from: 'lenoxquiche@gmail.com;',
         subject: data.subject,
         html: messageBody,
-        attachments: [{
-            filename: 'sailmakers_logo.jpg',
-            path: './public/images/sailmakers_logo.jpg',
-            cid: 'dave@uk-sailmakers-ne.com'
-        }]
     };
 
     if (data.isBulk) {
@@ -89,6 +53,5 @@ const deliverEmail = (req, res, next) => {
 }
 
 module.exports = {
-    deliverQuoteEmail,
     deliverEmail
 }
