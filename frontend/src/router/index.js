@@ -29,7 +29,8 @@ const routes = [
     {
       path: '/admin/createmail',
       name: 'CreateMessage',
-      component: () => import('../components/CreateMessage.vue')
+      component: () => import('../components/CreateMessage.vue'),
+      props: true
     },
     {
       path: '/admin/post',
