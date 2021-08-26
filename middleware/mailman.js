@@ -5,19 +5,15 @@ const smtpTransport = require('nodemailer-smtp-transport');
 const signature     = require('../signature');
 
 const transporter = nodemail.createTransport(smtpTransport({
-    host: "smtp-mail.outlook.com",
-    secureConnection: false,
-    port: 587,
+    service: "Gmail",
     auth: {
         user: config.mail.office,
         pass: config.mail.access
-    },
-    tls: {
-        ciphers: 'SSLv3'
     }
 }));
 
 const deliverEmail = (req, res, next) => {
+    console.log(config);
     var data = req.body
 
     var messageBody = `${data.body}<p>${signature}</p>`;
