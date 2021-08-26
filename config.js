@@ -16,8 +16,8 @@ const prod = {
         pw: process.env.PROD_DB_USER_PW
     },
     mail: {
-        office: 'lenoxquiche@gmail.com',
-        access: 'AlzaSyBfMASH7o4YDuwCQKRmAYkEz3ATLtqBpmk'
+        office: process.env.EMAIL_USER,
+        access: process.env.EMAIL_PW
     },
     salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
 };
@@ -34,8 +34,8 @@ const dev = {
         pw: process.env.DEV_DB_USER_PW
     },
     mail: {
-        office: 'lenoxquiche@gmail.com',
-        access: 'AlzaSyBfMASH7o4YDuwCQKRmAYkEz3ATLtqBpmk'
+        office: process.env.EMAIL_USER,
+        access: process.env.EMAIL_PW
     },
     salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
 };
