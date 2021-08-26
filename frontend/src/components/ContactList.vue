@@ -34,7 +34,7 @@
           :key="contact.id">
         <td width="10%">{{ contact.name }}</td>
         <td width="20%">
-          <router-link :to="{ name: 'CreateMessage', params: { 'payload': contact, 'caller': 'ContactList' } }">
+          <router-link :to="{ name: 'CreateMessage', params: { 'payload': contact.email, 'caller': 'ContactList' } }">
             {{ contact.email }}
           </router-link>
         </td>
