@@ -91,11 +91,21 @@ conn.sync({ force: true }).then( () => {
             return user.createPost({
                 title: `Sample title by ${user.firstName}`,
                 content: `Hello my name is ${user.firstName} ${user.lastName}`
+            }).then(() => {
+                return Contact.create({
+                    name: `${Faker.name.firstName()} ${Faker.name.lastName()}` ,
+                    email: Faker.internet.email(),
+                    cover: Faker.lorem.sentences(),
+                    hasMessaged: Math.floor(Math.random() * 2)
+                }).then((contact) => {
+                    console.log(`Loaded contact ${contact.name}`);
+                });
             });
         });
     });
 });
 
+/*
 conn.sync({ force: true }).then( () => {
     _.times(10, () =>  {
         return Contact.create({
@@ -108,4 +118,5 @@ conn.sync({ force: true }).then( () => {
         });
     });
 });
+*/
 module.exports = conn;
