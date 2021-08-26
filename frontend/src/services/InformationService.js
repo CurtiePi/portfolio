@@ -6,5 +6,8 @@ export default {
   },
   mutateInfo (payload) {
     return Api.post('/graphql', payload)
+  },
+  sendEmail (payload) {
+    return Api.post('/email', payload)
   }
 }
