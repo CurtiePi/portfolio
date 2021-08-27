@@ -81,6 +81,29 @@ const Mutation = new GraphQLObjectType({
                         cover: args.cover
                     });
                 }
+            },
+            updateContactMessageStatus: {
+                type: Contact,
+                args: {
+                    id: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    hasMessaged: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('You must be logged in to perform this operation!')
+                    }
+                    var contact = await ctx.models.contact.findByPk(args.id);
+                    if (!contact) {
+                        console.log(`Contact not found for this id: ${args.id}`);
+                    }
+                    contact.hasMessaged = args.hasMessaged;
+
+                    return await contact.save();
+                }
             }
         }
     }
