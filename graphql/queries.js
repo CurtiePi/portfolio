@@ -8,7 +8,7 @@ const { GraphQL,
 const bcrypt            = require('bcryptjs');
 const config            = require('../config');
 const jwt               = require('jsonwebtoken');
-const Post              = require('./post-schema');
+const Article           = require('./article-schema');
 const User              = require('./user-schema');
 const Auth              = require('./auth-schema');
 const Contact           = require('./contact-schema');
@@ -18,7 +18,7 @@ const Query = new GraphQLObjectType({
     description: 'This is a root query',
     fields: () => {
         return {
-            users: {
+            getUsers: {
                 type: new GraphQLList(User),
                 args: {
                     id: {
@@ -32,21 +32,24 @@ const Query = new GraphQLObjectType({
                     return ctx.models.user.findAll({ where: args });
                 }
             },
-            posts: {
-                type: new GraphQLList(Post),
+            getArticles: {
+                type: new GraphQLList(Article),
                 args: {
                     userId: {
                         type: GraphQLInt
                     },
                     userId: {
                         type: new GraphQLList(GraphQLInt)
-                   }
+                    },
+                    isActive: {
+                        type: GraphQLInt
+                    }
                 },
-                resolve(posts, args, ctx) {
-                    return ctx.models.post.findAll({ where: args });
+                resolve(articless, args, ctx) {
+                    return ctx.models.article.findAll({ where: args, order: '"updatedAt" DESC' });
                 }
             },
-            contacts: {
+            getContacts: {
                 type: new GraphQLList(Contact),
                 resolve(contacts, args, ctx) {
                     if (!ctx.isAuth) {

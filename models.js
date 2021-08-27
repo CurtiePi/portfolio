@@ -46,7 +46,7 @@ const User = conn.define('user', {
     }
 });
 
-const Post = conn.define('post', {
+const Article = conn.define('article', {
     title: {
         type: DataTypes.STRING,
         allowNull: false
@@ -54,6 +54,11 @@ const Post = conn.define('post', {
     content: {
         type: DataTypes.TEXT,
         allowNull: false
+    },
+    isActive: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: 0
     }
 });
 
@@ -67,7 +72,7 @@ const Contact = conn.define('contact', {
         allowNull: false
     },
     cover: {
-        type: DataTypes.STRING
+        type: DataTypes.TEXT
     },
     hasMessaged: {
         type: DataTypes.BOOLEAN,
@@ -76,8 +81,8 @@ const Contact = conn.define('contact', {
     }
 });
 
-User.hasMany(Post);
-Post.belongsTo(User);
+User.hasMany(Article);
+Article.belongsTo(User);
 
 
 conn.sync({ force: true }).then( () => {
@@ -88,9 +93,9 @@ conn.sync({ force: true }).then( () => {
             email: Faker.internet.email(),
             password: Faker.internet.password()
         }).then((user) => {
-            return user.createPost({
-                title: `Sample title by ${user.firstName}`,
-                content: `Hello my name is ${user.firstName} ${user.lastName}`
+            return user.createArticle({
+                title: ` Article by ${user.firstName}`,
+                content: Faker.lorem.sentences()
             }).then(() => {
                 return Contact.create({
                     name: `${Faker.name.firstName()} ${Faker.name.lastName()}` ,

@@ -1,6 +1,6 @@
 const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLList,  GraphQLString, GraphQLInt } = require('graphql');
 const HTML = require('./html-schema');
-const Post = require('./post-schema');
+const Article = require('./article-schema');
 const User = require('./user-schema');
 const Contact = require('./contact-schema');
 
@@ -37,8 +37,8 @@ const Mutation = new GraphQLObjectType({
                     });
                 }
             },
-            addPost: {
-                type: Post,
+            addArticle: {
+                type: Article,
                 args: {
                     userId: {
                         type: GraphQLNonNull(GraphQLInt)
@@ -48,6 +48,9 @@ const Mutation = new GraphQLObjectType({
                     },
                     content: {
                         type: GraphQLNonNull(HTML)
+                    },
+                    isActive: {
+                        type: GraphQLNonNull(GraphQLInt)
                     }
                 },
                 async resolve (source, args, ctx) {
@@ -55,10 +58,34 @@ const Mutation = new GraphQLObjectType({
                         throw new Error('You must be logged in to perform this operation!')
                     }
                     var user = await ctx.models.user.findByPk(args.userId);
-                    return user.createPost({
+                    return user.createArticle({
                         title: args.title,
-                        content: args.content
+                        content: args.content,
+                        isActive: args.isActive
                     });
+                }
+            },
+            updateArticleActivationStatus: {
+                type: Article,
+                args: {
+                    id: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    isActive: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('You must be logged in to perform this operation!')
+                    }
+                    var article = await ctx.models.article.findByPk(args.id);
+                    if (!article) {
+                        console.log(`Article not found for this id: ${args.id}`);
+                    }
+                    article.isActive = args.isActive;
+
+                    return await article.save();
                 }
             },
             addContact: {
