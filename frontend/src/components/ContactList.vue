@@ -34,7 +34,7 @@
           :key="contact.id">
         <td width="10%">{{ contact.name }}</td>
         <td width="20%">
-          <router-link :to="{ name: 'CreateMessage', params: { 'payload': contact.email, 'caller': 'ContactList' } }">
+          <router-link :to="{ name: 'CreateMessage', params: { 'contact_id': contact.id, 'contact_email': contact.email, 'caller': 'ContactList' } }">
             {{ contact.email }}
           </router-link>
         </td>
@@ -53,6 +53,7 @@ export default {
       contactList: [],
       contacts_display: [],
       contacts_view: 'unmessaged',
+      timer: ''
     }
   },
   computed: {
@@ -98,9 +99,16 @@ export default {
           break
       }
     },
+    cancelAutoUpdate () {
+      clearInterval(this.timer);
+    }
   },
-  mounted () {
+  created () {
     this.getContacts()
+    this.timer = setInterval(this.getContacts, 120000);
+  },
+  beforeUnmount () {
+    this.cancelAutoUpdate()
   }
 }
 </script>

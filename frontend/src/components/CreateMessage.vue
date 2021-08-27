@@ -9,14 +9,16 @@ import InputComponent from '@/components/InputComponent'
 
 export default {
   name: 'CreateMessage',
-  props: ['payload', 'caller'],
+  props: ['caller', 'contact_id', 'contact_email'],
   components: {
     InputComponent
   },
   data () {
     return {
       recipient: ['teserac_4@hotmail.com'],
-      callerName: null
+      callerName: null,
+      contactId: null,
+      contactEmail: null
     }
   },
   methods: {
@@ -27,33 +29,57 @@ export default {
     },
     async sendMessage (subject, content) {
       if (subject !== null && content !== null) {
+        this.recipient.push(this.contactEmail)
         var payload = {
           'subject': subject,
           'body': content,
           'recipients': this.recipient
         }
 
+        console.log(payload)
 
         let response = await InformationService.sendEmail(payload)
         console.log(response.status)
         if (response.status === 200) {
-          this.$router.replace({ name: this.callerName })
+          this.updateMessageStatus()
+
+          this.$router.push({ name: this.callerName })
         }
       } else {
         this.errorMsg = 'Please write your message and subject before trying to email your message!'
       }
+    },
+    async updateMessageStatus () {
+      let payload = {
+        query: `mutation {
+          updateContactMessageStatus(id: ${this.contactId}, hasMessaged: 1) {
+            id
+            name
+            email
+          }
+        }`
+      }
+
+      console.log(payload)
+
+      try{
+        let result = await InformationService.mutateInfo(payload)
+        console.log(result)
+      } catch (err) {
+        console.log(err)
+      }
     }
   },
   mounted () {
-    if (this.payload) {
-      console.log("Parameters have been sent to me")
-      this.recipient.push(this.payload)
-      if (this.caller) {
-        this.callerName = this.caller
-      }
+    if (this.contact_id) {
+      this.contactId = this.contact_id
     }
-    console.log(this.recipient)
-    console.log(this.callerName)
+    if (this.contact_email) {
+      this.contactEmail = this.contact_email
+    }
+    if (this.caller) {
+      this.callerName = this.caller
+    }
   }
 } 
 </script>
