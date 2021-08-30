@@ -1,41 +1,23 @@
 <template>
   <div>
     <img src="/images/skyline.jpg" />
+    <Article />
   </div>
 </template>
 <script>
-import InformationService from '@/services/InformationService'
+import Article from '@/components/Article'
 
 export default {
   name: 'Home',
+  components: {
+    Article
+  },
   data () {
     return {
-      posts: []
     }
   },
   methods: {
-    async getPosts () {
-      let payload = {
-        query: `query {
-          posts {
-            id
-            title
-            content
-          }
-        }`
-      }
-
-      try{
-        let result = await InformationService.queryInfo(payload)
-        this.posts = result.data.data.posts
-      } catch (err) {
-        console.log(err)
-      }
-    }
   },
-  mounted () {
-    this.getPosts()
-  }
 }
 </script>
 <style scoped>
