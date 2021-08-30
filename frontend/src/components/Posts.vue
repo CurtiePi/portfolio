@@ -30,7 +30,7 @@ export default {
     async getPosts () {
       let payload = {
         query: `query {
-          posts {
+          getPosts {
             id
             title
             content
