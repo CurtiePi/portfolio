@@ -14,10 +14,10 @@ const Article = new GraphQLObjectType({
                     return article.id;
                 }
             },
-            title: {
+            intro: {
                 type: GraphQLString,
                 resolve(article) {
-                    return article.title;
+                    return article.intro;
                 }
             },
             content: {

@@ -46,11 +46,16 @@ const Query = new GraphQLObjectType({
                     }
                 },
                 resolve(articless, args, ctx) {
-                    return ctx.models.article.findAll({ where: args, order: '"updatedAt" DESC' });
+                    return ctx.models.article.findAll({ where: args, order: [ ['updatedAt', 'DESC'] ] });
                 }
             },
             getContacts: {
                 type: new GraphQLList(Contact),
+                args: {
+                    id: {
+                        type: GraphQLInt
+                    }
+                },
                 resolve(contacts, args, ctx) {
                     if (!ctx.isAuth) {
                         throw new Error('You must be logged in to perform this operation!')

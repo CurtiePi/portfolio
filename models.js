@@ -47,9 +47,8 @@ const User = conn.define('user', {
 });
 
 const Article = conn.define('article', {
-    title: {
-        type: DataTypes.STRING,
-        allowNull: false
+    intro: {
+        type: DataTypes.TEXT
     },
     content: {
         type: DataTypes.TEXT,
@@ -95,7 +94,9 @@ conn.sync({ force: true }).then( () => {
         }).then((user) => {
             return user.createArticle({
                 title: ` Article by ${user.firstName}`,
-                content: Faker.lorem.sentences()
+                intro: Faker.lorem.sentence(),
+                content: Faker.lorem.sentences(),
+                isActive: Math.floor(Math.random() * 2)
             }).then(() => {
                 return Contact.create({
                     name: `${Faker.name.firstName()} ${Faker.name.lastName()}` ,
