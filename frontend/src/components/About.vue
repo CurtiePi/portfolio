@@ -17,8 +17,8 @@ export default {
     async getContent () {
       let payload = {
         query: `query {
-          posts (userId: 1) {
-            content
+          getContents (id: 1) {
+            cover
           }
         }`
       }
@@ -26,7 +26,7 @@ export default {
       try {
         let result = await InformationService.queryInfo(payload)
         console.log(result.data.data)
-        this.content = result.data.data.posts[0].content 
+        this.content = result.data.data.getContents[0].cover 
       } catch (err) {
         console.log(err)
       }
