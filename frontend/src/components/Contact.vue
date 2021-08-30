@@ -54,8 +54,10 @@ export default {
 
       try {
         let result = await InformationService.mutateInfo(payload)
-        console.log(result.data.data)
-        this.$router.replace({ name: 'Home' })
+        if(result.status === 200) {
+          this.$store.commit('scheduleRefresh', { type: 'contacts' })
+          this.$router.replace({ name: 'Home' })
+        }
       } catch (err) {
         console.log(err)
       }

@@ -68,7 +68,7 @@ export default {
     async getContacts () {
       let payload = {
         query: `query {
-          contacts {
+          getContacts {
             id
             name
             email
@@ -80,7 +80,7 @@ export default {
 
       try{
         let result = await InformationService.queryInfo(payload)
-        this.contactList = result.data.data.contacts
+        this.contactList = result.data.data.getContacts
         this.filterContacts()
       } catch (err) {
         console.log(err)
@@ -99,13 +99,19 @@ export default {
           break
       }
     },
+    checkForRefresh () {
+      if (this.$store.getters.getRefresh('contacts')) {
+        this.getContacts()
+        this.$store.commit('clearRefresh', { type: 'contacts' })
+      }
+    },
     cancelAutoUpdate () {
       clearInterval(this.timer);
     }
   },
   created () {
     this.getContacts()
-    this.timer = setInterval(this.getContacts, 120000);
+    this.timer = setInterval(this.checkForRefresh, 12000);
   },
   beforeUnmount () {
     this.cancelAutoUpdate()
