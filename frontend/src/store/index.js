@@ -1,11 +1,16 @@
 import { createStore } from 'vuex'
+import sharedMutations from 'vuex-shared-mutations'
 
 export default createStore({
   state: {
     isAuth: false,
     userId: null,
     token: null,
-    tokenExpiry: null
+    tokenExpiry: null,
+    refresh: {
+        contacts: false,
+        articles: false
+    }
   },
   getters: {
     isAuth: state => {
@@ -19,6 +24,9 @@ export default createStore({
     },
     getExpiry: state => {
         return state.tokenExpiry
+    },
+    getRefresh: (state) => (type) => {
+      return state.refresh[type]
     }
   },
   mutations: {
@@ -33,6 +41,13 @@ export default createStore({
       state.token = null
       state.userId = null
       state.tokenExpiry = null
+    },
+    scheduleRefresh(state, payload) {
+        state.refresh[payload.type] = true
+    },
+    clearRefresh(state, payload) {
+        state.refresh[payload.type] = false
     }
-  }
+  },
+  plugins: [sharedMutations({ predicate:['sheduleRefresh', 'clearRefresh'] })]
 })
