@@ -9,5 +9,8 @@ export default {
   },
   sendEmail (payload) {
     return Api.post('/email', payload)
+  },
+  subscribe (payload) {
+    return Api.post('/subscribe', payload)
   }
 }

@@ -9,11 +9,22 @@ Vue.config.ignoredElements = [/^ion-/]
 
 <script>
 import HeaderNav from '@/components/Navigation'
+import Subscriber from './sub_client'
 
 export default {
   name: 'App',
   components: {
     HeaderNav
+  },
+  data () {
+    return {
+    }
+  },
+  methods: {
+  },
+  mounted () {
+    const subscriber = new Subscriber(window.navigator)
+    subscriber.subscribe()
   }
 }
 </script>
