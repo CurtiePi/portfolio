@@ -19,7 +19,9 @@ const prod = {
         office: process.env.EMAIL_USER,
         access: process.env.EMAIL_PW
     },
-    salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
+    salt: 'th3eanswersl1eal0ng8heroa4swekn9w',
+    vapid_pub: process.env.PUBLIC_VAPID,
+    vapid_pri: process.env.PRIVATE_VAPID
 };
 
 const dev = {
@@ -37,7 +39,9 @@ const dev = {
         office: process.env.EMAIL_USER,
         access: process.env.EMAIL_PW
     },
-    salt: 'th3eanswersl1eal0ng8heroa4swekn9w'
+    salt: 'th3eanswersl1eal0ng8heroa4swekn9w',
+    vapid_pub: process.env.PUBLIC_VAPID,
+    vapid_pri: process.env.PRIVATE_VAPID
 };
 
 const config = {
