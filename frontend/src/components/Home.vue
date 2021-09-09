@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <img src="/images/skyline.jpg" />
+  <div class='container'>
+    <div class="carousel">
+      <img src="/images/skyline.jpg" />
+    </div>
+    <div class='body'>
     <Article />
+      </div>
   </div>
 </template>
 <script>
@@ -28,30 +32,30 @@ export default {
   margin: 0;
   padding: 0;
 }
+div { 
+  margin: 0;
+  padding: 0;
+}
 
-@media (min-width: 320px) {
-  div { 
-    margin: 0;
-    padding: 0;
-  }
-
-  img {
-    display: block;
+@media (max-width: 320px) {
+  .carousel {
     width: 100%;
-    height: auto;
+    max-height: 10vw;
   }
 }
 
 @media (min-width: 560px) {
-  div { 
-    margin: 0;
-    padding: 0;
+  .carousel {
+    width: 100%;
+    height: 30vw;
+    border: 1px #000000 solid;
   }
 
-  img {
-    display: block;
-    width: 100%;
-    height: auto;
+  .carousel img {
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    border: 1px solid #000;
   }
 }
 </style>
