@@ -29,6 +29,7 @@
     "faker": "^5.5.3",
     "find-config": "^1.0.0",
     "graphql": "^15.5.1",
+    "graphql-middleware": "^6.1.4",
     "graphql-modules": "^1.4.4",
     "graphql-scalar-html": "^1.0.0",
     "graphql-tools": "^7.0.5",
@@ -38,7 +39,8 @@
     "nodemailer": "^6.6.3",
     "nodemailer-smtp-transport": "^2.7.4",
     "sendmail": "^1.6.1",
-    "sequelize": "^6.6.5"
+    "sequelize": "^6.6.5",
+    "web-push": "^3.4.5"
   },
   "devDependencies": {
     "nodemon": "^2.0.12"
