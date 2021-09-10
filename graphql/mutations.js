@@ -43,7 +43,7 @@ const Mutation = new GraphQLObjectType({
                     userId: {
                         type: GraphQLNonNull(GraphQLInt)
                     },
-                    title: {
+                    intro: {
                         type: GraphQLNonNull(GraphQLString)
                     },
                     content: {
@@ -63,6 +63,38 @@ const Mutation = new GraphQLObjectType({
                         content: args.content,
                         isActive: args.isActive
                     });
+                }
+            },
+            updateArticle: {
+                type: Article,
+                args: {
+                    id: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    intro: {
+                        type: GraphQLNonNull(GraphQLString)
+                    },
+                    content: {
+                        type: GraphQLNonNull(HTML)
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('You must be logged in to perform this operation!')
+                    }
+                    var article = await ctx.models.article.findByPk(args.id);
+                    if (!article) {
+                        console.log(`Article not found for this id: ${args.id}`);
+                    }
+                    
+                    if (article.content !== args.content) {
+                      article.content = args.content;
+                    }
+                    if (article.intro !== args.intro) {
+                      article.intro = args.intro;
+                    }
+
+                    return await article.save();
                 }
             },
             updateArticleActivationStatus: {
