@@ -1,6 +1,7 @@
 <template>
   <div class="container">
-    <InputComponent v-on:childToParent="captureChildData" />
+    <InputComponent label="Subject" 
+      v-on:childToParent="captureChildData" />
   </div>
 </template>
 <script>

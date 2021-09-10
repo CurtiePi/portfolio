@@ -1,14 +1,16 @@
 <template>
   <div>
     <form>
-      <label htmlFor="title">Title</label>
+      <label class="highlight" htmlFor="title">{{ label }}:</label>
       <input
          type="text"
          name="title"
          id="title"
+         size=80
          v-model.trim="newPost.title"
        />
-      <label htmlFor="content">Content</label>
+       <p></p>
+      <label class="highlight" htmlFor="content">Enter your content below:</label>
     </form>
     <editor
        :api-key="mce_key"
@@ -36,6 +38,7 @@ import Editor from '@tinymce/tinymce-vue'
 
 export default {
   name: 'Input',
+  props: ['initTitle', 'initContent', 'label'],
   components: {
     editor: Editor
   },
@@ -43,8 +46,8 @@ export default {
   data () {
     return {
       newPost: {
-        title: null,
-        content: null
+        title: this.initTitle,
+        content: this.initContent
       },
       mce_key :'thisisadummykey',
       userId: this.$store.getters.getUserId
@@ -54,9 +57,12 @@ export default {
     postToParent () {
       this.$emit('childToParent', this.newPost)
     }
-  },
+  }
 }
 </script>
 <style scoped>
+.highlight {
+  font-weight: bold;
+}
 </style>
 
