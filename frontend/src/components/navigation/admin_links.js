@@ -5,9 +5,9 @@ const adminNavLinks = [
     name: 'Home'
   },
   {
-    text: 'Admin Task 2',
+    text: 'Articles',
     icon: 'people',
-    name: 'Home'
+    name: 'ArticleList'
   },
   {
     text: 'Contacts',

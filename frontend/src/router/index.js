@@ -27,6 +27,23 @@ const routes = [
       component: () => import('../components/ContactList.vue')
     },
     {
+      path: '/admin/articlelist',
+      name: 'ArticleList',
+      component: () => import('../components/ArticleList.vue')
+    },
+    {
+      path: '/admin/createarticle',
+      name: 'CreateArticle',
+      component: () => import('../components/CreateArticle.vue'),
+      props: true
+    },
+    {
+      path: '/admin/editarticle',
+      name: 'EditArticle',
+      component: () => import('../components/EditArticle.vue'),
+      props: true
+    },
+    {
       path: '/admin/createmail',
       name: 'CreateMessage',
       component: () => import('../components/CreateMessage.vue'),
