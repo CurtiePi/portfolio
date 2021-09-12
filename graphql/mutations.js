@@ -2,6 +2,8 @@ const { GraphQL, GraphQLSchema, GraphQLObjectType, GraphQLNonNull, GraphQLList, 
 const HTML = require('./html-schema');
 const Article = require('./article-schema');
 const User = require('./user-schema');
+const Service = require('./service-schema');
+const Item = require('./item-schema');
 const Contact = require('./contact-schema');
 
 const Mutation = new GraphQLObjectType({
@@ -163,7 +165,71 @@ const Mutation = new GraphQLObjectType({
 
                     return await contact.save();
                 }
-            }
+            },
+            addService: {
+                type: Service,
+                args: {
+                    name: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    },
+                    description: {
+                        type: new GraphQLNonNull(GraphQLString)
+                    }
+                },
+                resolve(_, args, ctx ) {
+                    if (!ctx.isAuth) {
+                      throw new Error('You must be logged in to perform this operation!')
+                    }
+                    return ctx.models.service.create({
+                        name: args.name,
+                        description: args.description
+                    });
+                }
+            },
+            addItem: {
+                type: Item,
+                args: {
+                    serviceId: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    detail: {
+                        type: GraphQLNonNull(GraphQLString)
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                        throw new Error('You must be logged in to perform this operation!')
+                    }
+                    var service = await ctx.models.service.findByPk(args.serviceId);
+                    return service.createItem({
+                        detail: args.detail
+                    });
+                }
+            },
+            addItems: {
+                type: GraphQLList(Item),
+                args: {
+                    serviceId: {
+                        type: GraphQLNonNull(GraphQLInt)
+                    },
+                    detail: {
+                        type: GraphQLNonNull(GraphQLList(GraphQLString))
+                    }
+                },
+                async resolve (source, args, ctx) {
+                    if (!ctx.isAuth) {
+                      throw new Error('You must be logged in to perform this operation!')
+                    }
+                    var service = await ctx.models.service.findByPk(args.serviceId);
+                    var itemArray = [];
+
+                    for (const item in args.detail) {
+                      itemArray.push(service.createItem({ detail: args.detail[item] }));
+                    }
+
+                    return itemArray
+                }
+            },
         }
     }
 });

@@ -12,6 +12,8 @@ const Article           = require('./article-schema');
 const User              = require('./user-schema');
 const Auth              = require('./auth-schema');
 const Contact           = require('./contact-schema');
+const Service           = require('./service-schema');
+const Item              = require('./item-schema');
 
 const Query = new GraphQLObjectType({
     name: 'Query',
@@ -35,7 +37,7 @@ const Query = new GraphQLObjectType({
             getArticles: {
                 type: new GraphQLList(Article),
                 args: {
-                    userId: {
+                    id: {
                         type: GraphQLInt
                     },
                     userId: {
@@ -45,7 +47,7 @@ const Query = new GraphQLObjectType({
                         type: GraphQLInt
                     }
                 },
-                resolve(articless, args, ctx) {
+                resolve(articles, args, ctx) {
                     return ctx.models.article.findAll({ where: args, order: [ ['updatedAt', 'DESC'] ] });
                 }
             },
@@ -61,6 +63,40 @@ const Query = new GraphQLObjectType({
                         throw new Error('You must be logged in to perform this operation!')
                     }
                     return ctx.models.contact.findAll({ where: args });
+                }
+            },
+            getServices: {
+                type: new GraphQLList(Service),
+                args: {
+                    id: {
+                        type: GraphQLInt
+                    },
+                    name: {
+                        type: GraphQLString
+                    },
+                    description: {
+                        type: GraphQLString
+                    }
+                },
+                resolve(services, args, ctx) {
+                    return ctx.models.service.findAll({ where: args });
+                }
+            },
+            getItems: {
+                type: new GraphQLList(Item),
+                args: {
+                    id: {
+                        type: GraphQLInt
+                    },
+                    serviceId: {
+                        type: new GraphQLList(GraphQLInt)
+                    },
+                    detail: {
+                        type: GraphQLString
+                    }
+                },
+                resolve(items, args, ctx) {
+                    return ctx.models.item.findAll({ where: args });
                 }
             },
             login: {

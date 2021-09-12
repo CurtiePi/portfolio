@@ -83,6 +83,25 @@ const Contact = conn.define('contact', {
 User.hasMany(Article);
 Article.belongsTo(User);
 
+const Service = conn.define('service', {
+    name: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    description: {
+        type: DataTypes.TEXT
+    }
+});
+
+const Item = conn.define('item', {
+    detail: {
+        type: DataTypes.TEXT,
+        allowNull: false
+    }
+});
+
+Service.hasMany(Item);
+Item.belongsTo(Service);
 
 conn.sync({ force: true }).then( () => {
     _.times(10, () =>  {
