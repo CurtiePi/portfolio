@@ -44,6 +44,23 @@ const routes = [
       props: true
     },
     {
+      path: '/admin/servicelist',
+      name: 'ServiceList',
+      component: () => import('../components/ServiceList.vue')
+    },
+    {
+      path: '/admin/createservice',
+      name: 'CreateService',
+      component: () => import('../components/CreateService.vue'),
+      props: true
+    },
+    {
+      path: '/admin/serviceDetail',
+      name: 'ServiceDetail',
+      component: () => import('../components/ServiceDetail.vue'),
+      props: true
+    },
+    {
       path: '/admin/createmail',
       name: 'CreateMessage',
       component: () => import('../components/CreateMessage.vue'),

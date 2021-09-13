@@ -13,7 +13,12 @@ const adminNavLinks = [
     text: 'Contacts',
     icon: 'home',
     name: 'ContactList'
-  }
+  },
+  {
+    text: 'Services',
+    icon: 'people',
+    name: 'ServiceList'
+  },
 ]
 
 export default adminNavLinks
