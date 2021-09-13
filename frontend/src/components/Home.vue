@@ -4,17 +4,20 @@
       <img src="/images/skyline.jpg" />
     </div>
     <div class='body'>
-    <Article />
-      </div>
+      <Article />
+      <Service />
+    </div>
   </div>
 </template>
 <script>
 import Article from '@/components/Article'
+import Service from '@/components/Service'
 
 export default {
   name: 'Home',
   components: {
-    Article
+    Article,
+    Service
   },
   data () {
     return {
