@@ -125,6 +125,23 @@ conn.sync({ force: true }).then( () => {
                 }).then((contact) => {
                     console.log(`Loaded contact ${contact.name}`);
                 });
+            }).then(() => {
+                return Service.create({
+                  name: Faker.commerce.productName(),
+                  description: Faker.commerce.productDescription()
+                }).then((service) => {
+                    var promises = [];
+                    for (var x = 0; x < 3; x++) {
+                        promises.push(service.createItem({detail: Faker.lorem.sentence()}));
+                    }
+                    Promise.all(promises)
+                        .then((response) => {
+                            console.log('All Done')
+                        })
+                        .catch((error) => {
+                            console.log(`Error in executing ${error}`)
+                        });
+                });
             });
         });
     });
