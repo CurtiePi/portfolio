@@ -1,4 +1,5 @@
 import { createWebHistory, createRouter } from 'vue-router'
+import store from '../store/index'
 
 const routes = [
     {
@@ -29,7 +30,7 @@ const routes = [
     {
       path: '/admin/articlelist',
       name: 'ArticleList',
-      component: () => import('../components/ArticleList.vue')
+      component: () => import('../components/ArticleList.vue'),
     },
     {
       path: '/admin/createarticle',
@@ -76,6 +77,16 @@ const routes = [
 const router = createRouter({
   history: createWebHistory(),
   routes
+})
+
+router.beforeEach((to, _, next) => {
+  console.log(`Logged in: ${store.getters.isAuth}`)
+  if (to.path.includes('/admin') && !store.getters.isAuth) {
+      console.log(`Logged in: ${store.getters.isAuth}`)
+      next({ name: 'Home' })
+  } else {
+    next()
+  }
 })
 
 
